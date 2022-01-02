@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                     prefix = "-"
                     tvValue = tvValue.substring(1)
                 }
+
                 if(tvValue.contains("-")){
                     val splitValue = tvValue.split("-")
                     var valueOne = splitValue[0] // 99
@@ -65,13 +66,48 @@ class MainActivity : AppCompatActivity() {
                    if(prefix.isNotEmpty()){
                        valueOne = prefix + valueOne
                    }
-                    tvInput?.text = (valueOne.toDouble() - valueTwo.toDouble()).toString()
+                    tvInput?.text = removeZeroAfterDot((valueOne.toDouble() - valueTwo.toDouble()).toString())
+                } else if(tvValue.contains("+")){
+                    val splitValue = tvValue.split("+")
+                    var valueOne = splitValue[0] // 99
+                    var valueTwo = splitValue[1] // 1
+
+                    if(prefix.isNotEmpty()){
+                        valueOne = prefix + valueOne
+                    }
+                    tvInput?.text = removeZeroAfterDot((valueOne.toDouble() + valueTwo.toDouble()).toString())
+                } else if(tvValue.contains("/")){
+                    val splitValue = tvValue.split("/")
+                    var valueOne = splitValue[0] // 99
+                    var valueTwo = splitValue[1] // 1
+
+                    if(prefix.isNotEmpty()){
+                        valueOne = prefix + valueOne
+                    }
+                    tvInput?.text = removeZeroAfterDot((valueOne.toDouble() / valueTwo.toDouble()).toString())
+                } else if(tvValue.contains("*")){
+                    val splitValue = tvValue.split("*")
+                    var valueOne = splitValue[0] // 99
+                    var valueTwo = splitValue[1] // 1
+
+                    if(prefix.isNotEmpty()){
+                        valueOne = prefix + valueOne
+                    }
+                    tvInput?.text = removeZeroAfterDot((valueOne.toDouble() * valueTwo.toDouble()).toString())
                 }
             } catch(e: ArithmeticException){
                 e.printStackTrace()
             }
 
         }
+    }
+
+    private fun removeZeroAfterDot(result : String) : String{
+        var value = result
+        if(result.contains(".0")){
+            value = result.substring(0, result.length - 2 )
+        }
+        return value
     }
 
     private fun isOperatorAdded(value : String) : Boolean {
